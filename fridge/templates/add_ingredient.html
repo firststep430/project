@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재료 등록</title>
+    <script>
+        function registerIngredient() {
+            let userId = document.getElementById("user_id").value;
+            let name = document.getElementById("name").value;
+            let quantity = document.getElementById("quantity").value;
+
+            fetch("/fridge/register/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `user_id=${userId}&name=${name}&quantity=${quantity}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.success || data.error);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</head>
+<body>
+    <h2>재료 등록</h2>
+    <label>사용자 ID: <input type="number" id="user_id"></label><br>
+    <label>재료 이름: <input type="text" id="name"></label><br>
+    <label>수량: <input type="number" id="quantity"></label><br>
+    <button onclick="registerIngredient()">등록</button>
+</body>
+</html>
